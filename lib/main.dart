@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sqflite7/connection/database_con.dart';
 import 'package:sqflite7/model/user_model.dart';
+import 'package:sqflite7/update_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -78,9 +79,25 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     var datadb = snapshot.data![index];
-                    return Card(
-                      child: ListTile(
-                        title: Text(datadb.name),
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UpdateUser(user: datadb),
+                            ));
+                      },
+                      child: Card(
+                        child: ListTile(
+                          title: Text(datadb.name),
+                          trailing: IconButton(
+                            onPressed: () async {
+                              print('object');
+                              await DatabaseCon().deleteDatabase(datadb.id);
+                            },
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                          ),
+                        ),
                       ),
                     );
                   },

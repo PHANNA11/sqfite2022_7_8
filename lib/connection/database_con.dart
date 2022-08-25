@@ -35,6 +35,15 @@ class DatabaseCon {
     return result.map((e) => User.fromJson(e)).toList();
   }
 
-  updateDatabase() {}
-  deleteDatabase() {}
+  Future<void> updateDatabase(User user) async {
+    final db = await intializeDatabase();
+    await db.update(tableName, user.toJson(),
+        where: '$fId=?', whereArgs: [user.id]);
+  }
+
+  Future<void> deleteDatabase(int id) async {
+    print('id=$id');
+    final db = await intializeDatabase();
+    await db.delete(tableName, where: '$fId = ?', whereArgs: [id]);
+  }
 }

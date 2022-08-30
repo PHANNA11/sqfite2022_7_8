@@ -3,7 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sqflite7/connection/database_con.dart';
 
-import 'model/user_model.dart';
+import '../model/user_model.dart';
 
 class UpdateUser extends StatefulWidget {
   UpdateUser({required this.user, Key? key}) : super(key: key);
@@ -40,8 +40,8 @@ class _UpdateUserState extends State<UpdateUser> {
           ),
           ElevatedButton(
               onPressed: () async {
-                await DatabaseCon().updateDatabase(
-                    User(id: widget.user.id, name: controller.text));
+                // await DatabaseCon().updateDatabase(
+                //     User(id: widget.user.id, name: controller.text));
                 // ignore: use_build_context_synchronously
                 Navigator.pop(context);
               },

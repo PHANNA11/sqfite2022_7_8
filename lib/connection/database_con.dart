@@ -11,6 +11,10 @@ class DatabaseCon {
   String tableName = 'User';
   String fId = 'id';
   String fName = 'name';
+  String fSex = 'sex';
+  String fAddress = 'addr';
+  String fDOB = 'dob';
+  String fProfile = 'profile';
   Future<Database> intializeDatabase() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
@@ -19,7 +23,7 @@ class DatabaseCon {
     String path = await getDatabasesPath();
     return openDatabase(join(path, 'userdb.db'), onCreate: (db, version) async {
       await db.execute(
-          'CREATE TABLE $tableName($fId INTEGER PRIMIRY KEY,$fName TEXT)');
+          'CREATE TABLE $tableName($fId INTEGER PRIMIRY KEY,$fName TEXT,$fSex TEXT,$fAddress TEXT,$fProfile TETX,$fDOB TEXT)');
     }, version: 1);
   }
 

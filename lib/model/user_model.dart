@@ -3,7 +3,17 @@ import 'dart:convert';
 class User {
   late int id;
   late String name;
-  User({required this.id, required this.name});
+  late String sex;
+  late String profileImage;
+  late String address;
+  late String userDOB;
+  User(
+      {required this.id,
+      required this.name,
+      required this.sex,
+      required this.address,
+      required this.profileImage,
+      required this.userDOB});
   Map<String, dynamic> toJson() {
     return {'id': id, 'name': name};
   }

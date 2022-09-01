@@ -4,21 +4,22 @@ import 'dart:math';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sqflite7/view/homepages.dart';
 import 'package:sqflite7/view/update_screen.dart';
 
 import '../connection/database_con.dart';
 import '../model/user_model.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class AddDataPage extends StatefulWidget {
+  const AddDataPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<AddDataPage> createState() => _AddDataPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _AddDataPageState extends State<AddDataPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController genderController = TextEditingController();
   TextEditingController adressController = TextEditingController();
@@ -126,57 +127,25 @@ class _MyHomePageState extends State<MyHomePage> {
                       label: Text('Date of Birth'),
                       border: OutlineInputBorder()),
                 )),
-            // Container(
-            //   height: 600,
-            //   width: double.infinity,
-            //   child: FutureBuilder(
-            //     future: listUser,
-            //     builder: (context, AsyncSnapshot<List<User>> snapshot) {
-            //       if (snapshot.connectionState == ConnectionState.waiting) {
-            //         return const CircularProgressIndicator();
-            //       }
-            //       return ListView.builder(
-            //         itemCount: snapshot.data!.length,
-            //         itemBuilder: (context, index) {
-            //           var datadb = snapshot.data![index];
-            //           return InkWell(
-            //             onTap: () {
-            //               Navigator.push(
-            //                   context,
-            //                   MaterialPageRoute(
-            //                     builder: (context) => UpdateUser(user: datadb),
-            //                   ));
-            //             },
-            //             child: Card(
-            //               child: ListTile(
-            //                 title: Text(datadb.name),
-            //                 trailing: IconButton(
-            //                   onPressed: () async {
-            //                     print('object');
-            //                     await DatabaseCon().deleteDatabase(datadb.id);
-            //                   },
-            //                   icon: const Icon(Icons.delete, color: Colors.red),
-            //                 ),
-            //               ),
-            //             ),
-            //           );
-            //         },
-            //       );
-            //     },
-            //   ),
-            // )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await DatabaseCon().insertDatabase(User(
-              id: Random().nextInt(100),
-              name: nameController.text,
-              address: adressController.text,
-              profileImage: imageFile!.path,
-              sex: genderController.text,
-              userDOB: dobController.text));
+          await DatabaseCon()
+              .insertDatabase(User(
+                  id: Random().nextInt(100),
+                  name: nameController.text,
+                  address: adressController.text,
+                  profileImage: imageFile!.path,
+                  sex: genderController.text,
+                  userDOB: dobController.text))
+              .whenComplete(() {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+                (route) => false);
+          });
         },
         tooltip: 'save',
         child: const Icon(Icons.done),

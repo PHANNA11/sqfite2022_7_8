@@ -15,10 +15,21 @@ class User {
       required this.profileImage,
       required this.userDOB});
   Map<String, dynamic> toJson() {
-    return {'id': id, 'name': name};
+    return {
+      'id': id,
+      'name': name,
+      'sex': sex,
+      'addr': address,
+      'profile': profileImage,
+      'dob': userDOB
+    };
   }
 
   User.fromJson(Map<String, dynamic> json)
       : id = json["id"],
-        name = json["name"];
+        name = json["name"],
+        sex = json["sex"],
+        address = json["addr"],
+        profileImage = json["profile"],
+        userDOB = json["dob"];
 }
